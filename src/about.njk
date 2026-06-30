@@ -1,0 +1,107 @@
+---
+layout: base.njk
+title: About
+description: Why Saudade exists, who built it, and what it stands for.
+---
+
+<div class="about-page">
+  <div class="page-header">
+    <div class="container">
+      <div class="page-header-inner">
+        <h1 class="page-title">About Saudade</h1>
+        <p class="page-description">Why this space exists, who built it, and what it is committed to being.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    {% set aboutData = collections.all | selectattr("fileSlug", "eq", "about") | first %}
+
+    <div class="about-layout">
+      {# Left column — content #}
+      <div class="about-main">
+
+        <div class="about-section">
+          <p class="about-section-label">Why I Built This</p>
+          <div class="about-section-content">
+            {% if aboutData and aboutData.data.why_built %}
+              {{ aboutData.data.why_built | safe }}
+            {% else %}
+              <div class="placeholder-content">
+                <strong>Founder — fill this in via the CMS</strong>
+                Go to /admin, open About Page, and write your story in the "Why I Built This" field. This is the most important thing on this page — write it in your own voice.
+              </div>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="about-section" style="margin-top: var(--space-10);">
+          <p class="about-section-label">A Little About Me</p>
+          <div class="about-section-content">
+            {% if aboutData and aboutData.data.about_me %}
+              {{ aboutData.data.about_me | safe }}
+            {% else %}
+              <div class="placeholder-content">
+                <strong>Founder — fill this in via the CMS</strong>
+                Go to /admin, open About Page, and add something to the "A Little About Me" field. Your field, your program, whatever you want to share — or nothing, if you prefer to let the work speak.
+              </div>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="about-section" style="margin-top: var(--space-10);">
+          <p class="about-section-label">What I Hope You Feel Here</p>
+          <div class="about-section-content">
+            {% if aboutData and aboutData.data.hope %}
+              <p>{{ aboutData.data.hope }}</p>
+            {% else %}
+              <div class="placeholder-content">
+                <strong>Founder — fill this in via the CMS</strong>
+                Go to /admin, open About Page, and answer the "What I Hope You Feel Here" field. One to three sentences is plenty.
+              </div>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="about-section" id="values" style="margin-top: var(--space-12); padding-top: var(--space-10); border-top: 1px solid var(--color-border);">
+          <p class="about-section-label">What This Space Stands For</p>
+          <div class="values-list">
+            <div class="value-item">
+              <span class="value-arrow" aria-hidden="true">→</span>
+              <span>Honesty over performance</span>
+            </div>
+            <div class="value-item">
+              <span class="value-arrow" aria-hidden="true">→</span>
+              <span>Community over competition</span>
+            </div>
+            <div class="value-item">
+              <span class="value-arrow" aria-hidden="true">→</span>
+              <span>Curation over automation</span>
+            </div>
+            <div class="value-item">
+              <span class="value-arrow" aria-hidden="true">→</span>
+              <span>Quiet over noise</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      {# Right sidebar #}
+      <aside class="about-sidebar">
+        <div class="etymology-card">
+          <p class="etymology-wordmark"><em>Saudade</em></p>
+          <p class="etymology-pronunciation">sow-DAH-deh</p>
+          <p class="etymology-origin">Portuguese · noun · 15th century</p>
+          <p class="etymology-def">A deep emotional state of nostalgic longing for something or someone beloved that is absent — often carrying the knowledge that what is longed for may never return. A melancholic love. The love that remains when the thing itself is gone.</p>
+          <p class="etymology-def" style="margin-top: var(--space-4);">The word has no direct English translation. It is often called untranslatable. That is part of why it was chosen — some feelings do not have words, but they exist anyway. Naming them matters.</p>
+        </div>
+
+        <div class="content-note-card">
+          <p class="content-note-title">A note on content</p>
+          <p class="content-note-body">Everything on this site — every word in the journal, every story in the community section, every piece of content — was written by a real person. No content on Saudade is AI-generated. No experiences are invented on anyone's behalf. The founder reviews everything before it appears here. If something is here, a real person wrote it.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>

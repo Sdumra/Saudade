@@ -1,0 +1,123 @@
+---
+layout: base.njk
+title: Home
+description: Saudade is a community platform for graduate students — real stories, quiet solidarity, and the reminder that you are not walking this road alone.
+---
+{% from "macros.njk" import postCard, emptyState %}
+
+{# ——— Opening Section ——— #}
+<section class="home-opening">
+  <div class="home-opening-inner">
+    <h1 class="home-wordmark">Saudade</h1>
+    <p class="home-pronunciation">sow-DAH-deh</p>
+    <p class="home-definition-line">&ldquo;For the silence between who you were and who you are still becoming.&rdquo;</p>
+    <p class="home-definition-sub">A community for graduate students. Real stories. Quiet solidarity. The reminder that this road, as hard as it is, is not yours to walk alone.</p>
+    <div class="home-cta-row">
+      <a href="/journal/" class="btn btn-primary btn-large">Read the Journal</a>
+      <a href="/stories/" class="btn btn-outline btn-large">Community Stories</a>
+    </div>
+  </div>
+</section>
+
+{# ——— Why I Created Saudade ——— #}
+<section class="home-why">
+  <div class="container">
+    <div class="home-why-inner">
+      <p class="section-label">Why I Created Saudade</p>
+      {% set aboutData = collections.all | selectattr("fileSlug", "eq", "about") | first %}
+      <div class="home-why-content">
+        {% if aboutData and aboutData.data.why_built %}
+          {{ aboutData.data.why_built | safe }}
+        {% else %}
+          <div class="placeholder-content">
+            <strong>Founder — fill this in via the CMS</strong>
+            This is where your story goes — why you built Saudade, what drove you to create it, what you were carrying when you started. It is the first thing visitors will read on this page. Write it in your own voice, as honestly as you can. This placeholder will disappear once you add your words at /admin under "About Page."
+          </div>
+        {% endif %}
+      </div>
+      <a href="/about/" class="btn btn-outline btn-small" style="margin-top: var(--space-6); display: inline-block;">Read more about this project</a>
+    </div>
+  </div>
+</section>
+
+{# ——— What You'll Find ——— #}
+<section class="home-section" style="background: var(--color-surface-alt); padding: var(--space-20) 0;">
+  <div class="container">
+    <h2 class="home-section-title" style="text-align: center; margin-bottom: var(--space-12);">What you will find here</h2>
+    <div class="features-grid">
+      <a href="/journal/" class="feature-item">
+        <span class="feature-icon" aria-hidden="true">✦</span>
+        <h3 class="feature-title">The Journal</h3>
+        <p class="feature-desc">Writing from the founder — honest, unpolished reflections on graduate school life. No advice columns. No silver linings you did not earn.</p>
+      </a>
+      <a href="/stories/" class="feature-item">
+        <span class="feature-icon" aria-hidden="true">◈</span>
+        <h3 class="feature-title">Community Stories</h3>
+        <p class="feature-desc">Real voices from real graduate students. Submitted, reviewed, and published with care. Every story here belonged to someone who needed to be heard.</p>
+      </a>
+      <a href="/resources/" class="feature-item">
+        <span class="feature-icon" aria-hidden="true">◌</span>
+        <h3 class="feature-title">Resources</h3>
+        <p class="feature-desc">Carefully selected books, tools, communities, and crisis support. Not a comprehensive list — a curated one, chosen with intention.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+{# ——— Latest from Journal ——— #}
+<section class="home-section">
+  <div class="container">
+    <div class="home-section-header">
+      <h2 class="home-section-title">Latest from the journal</h2>
+      <a href="/journal/" class="btn btn-outline btn-small">View all</a>
+    </div>
+
+    {% set recentPosts = collections.blogPosts | limit(3) %}
+    {% if recentPosts and recentPosts.length > 0 %}
+      <div class="card-grid">
+        {% for post in recentPosts %}
+          {{ postCard(post) }}
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty-state">
+        <div class="empty-state-icon" aria-hidden="true">✦</div>
+        <h3>Your first entry will appear here</h3>
+        <p>When you publish your first journal post, it will show up here. Go to <strong>/admin</strong>, open Journal Posts, write something true, and toggle Draft off.</p>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{# ——— Newsletter ——— #}
+<section class="newsletter-section">
+  <div class="newsletter-inner">
+    <h2 class="newsletter-title">One email a month</h2>
+    <p class="newsletter-subtitle">No spam. Just new writing and community stories — when they are ready.</p>
+    <form class="newsletter-form" id="newsletter-form" novalidate>
+      <input
+        type="email"
+        class="newsletter-input"
+        id="newsletter-email"
+        name="email"
+        placeholder="your@email.edu"
+        aria-label="Email address"
+        required
+      />
+      <button type="submit" class="btn btn-moss">Subscribe</button>
+    </form>
+    <p class="newsletter-success" id="newsletter-success">
+      Thank you. You are on the list. One email a month, no more.
+    </p>
+  </div>
+</section>
+
+<script>
+  document.getElementById("newsletter-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const email = document.getElementById("newsletter-email").value.trim();
+    if (!email) return;
+    document.getElementById("newsletter-form").style.display = "none";
+    document.getElementById("newsletter-success").classList.add("is-visible");
+  });
+</script>

@@ -1,0 +1,153 @@
+---
+layout: base.njk
+title: Resources
+description: Carefully selected books, tools, communities, and crisis support for graduate students. Not comprehensive — curated with intention.
+---
+
+<div class="resources-page">
+  <div class="page-header">
+    <div class="container">
+      <div class="page-header-inner">
+        <h1 class="page-title">Resources</h1>
+        <p class="page-description">A curated collection — not a comprehensive list. Everything here was chosen because it is actually useful, not because it looks good on a wellness page. Crisis support is always first.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    {# Crisis banner — always first, always visible #}
+    <div class="crisis-banner">
+      <p class="crisis-banner-title">If you are in crisis right now</p>
+      <div class="crisis-list">
+        <div class="crisis-item">
+          <span class="crisis-item-name">988 Suicide and Crisis Lifeline</span>
+          <span class="crisis-item-detail">Call or text 988 — United States</span>
+        </div>
+        <div class="crisis-item">
+          <span class="crisis-item-name">Crisis Text Line</span>
+          <span class="crisis-item-detail">Text HOME to 741741</span>
+        </div>
+        <div class="crisis-item">
+          <span class="crisis-item-name">NAMI Helpline</span>
+          <span class="crisis-item-detail">1-800-950-6264 — Mon–Fri 10am–10pm ET</span>
+        </div>
+        <div class="crisis-item">
+          <span class="crisis-item-name">Campus Counseling</span>
+          <span class="crisis-item-detail">Check your university's counseling center website for same-day or crisis appointments</span>
+        </div>
+      </div>
+    </div>
+
+    {# Search #}
+    <div class="search-row" style="margin-bottom: var(--space-10);">
+      <div class="search-input-wrap">
+        <svg class="search-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+        <input
+          type="search"
+          class="search-input"
+          id="resources-search"
+          placeholder="Search resources..."
+          aria-label="Search resources"
+        />
+      </div>
+    </div>
+
+    {# Group resources by category #}
+    {% set allResources = collections.allResources %}
+
+    {% for cat in site.resourceCategories %}
+      {% if cat.label != "Crisis Support" %}
+      <div class="resource-group" data-group="{{ cat.label }}">
+        <div class="resource-group-header">
+          <span class="resource-group-icon" aria-hidden="true">{{ cat.icon }}</span>
+          <h2 class="resource-group-title">{{ cat.label }}</h2>
+        </div>
+        <div class="card-grid">
+          {# CMS resources for this category #}
+          {% set hasResources = false %}
+          {% if allResources %}
+            {% for resource in allResources %}
+              {% if resource.data.category == cat.label %}
+                {% set hasResources = true %}
+                <div class="resource-card"
+                     data-resource-title="{{ resource.data.title | lower }}"
+                     data-resource-desc="{{ resource.data.description | lower }}"
+                     data-resource-category="{{ resource.data.category }}">
+                  <div class="resource-card-header">
+                    <h3 class="resource-title">{{ resource.data.title }}</h3>
+                    <span class="tag tag--type">{{ resource.data.type }}</span>
+                  </div>
+                  <p class="resource-desc">{{ resource.data.description }}</p>
+                  {% if resource.data.url %}
+                  <a href="{{ resource.data.url }}" class="btn btn-outline btn-small" target="_blank" rel="noopener noreferrer" style="margin-top: var(--space-4);">Visit &rarr;</a>
+                  {% endif %}
+                </div>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+          {# Placeholder if no resources in this category yet #}
+          {% if not hasResources %}
+          <div class="resource-card placeholder-resource"
+               data-resource-title="placeholder"
+               data-resource-desc="placeholder"
+               data-resource-category="{{ cat.label }}">
+            <div class="placeholder-content">
+              <strong>Add {{ cat.label }} resources via CMS</strong>
+              Go to /admin, open Resources, create a new entry, and set the Category to "{{ cat.label }}". Your first resource will replace this placeholder.
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+    {% endfor %}
+
+    <div class="empty-state" id="resources-no-results" style="display: none;">
+      <div class="empty-state-icon" aria-hidden="true">◌</div>
+      <h3>No resources match</h3>
+      <p>Try a different search term.</p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function() {
+  const searchInput = document.getElementById("resources-search");
+  const groups = document.querySelectorAll(".resource-group");
+
+  if (!searchInput) return;
+
+  searchInput.addEventListener("input", function() {
+    const term = this.value.trim().toLowerCase();
+    let totalVisible = 0;
+
+    groups.forEach(function(group) {
+      const cards = group.querySelectorAll(".resource-card");
+      let groupVisible = 0;
+
+      cards.forEach(function(card) {
+        const title = card.getAttribute("data-resource-title") || "";
+        const desc = card.getAttribute("data-resource-desc") || "";
+        if (!term || title.includes(term) || desc.includes(term)) {
+          card.style.display = "";
+          groupVisible++;
+        } else {
+          card.style.display = "none";
+        }
+      });
+
+      group.style.display = groupVisible === 0 ? "none" : "";
+      totalVisible += groupVisible;
+    });
+
+    const noResults = document.getElementById("resources-no-results");
+    if (noResults) {
+      noResults.style.display = totalVisible === 0 ? "block" : "none";
+    }
+  });
+})();
+</script>

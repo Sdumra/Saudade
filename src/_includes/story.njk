@@ -1,0 +1,43 @@
+---
+layout: base.njk
+---
+<article class="story-page">
+  <div class="container">
+
+    <div class="post-nav-row">
+      <a href="/stories/" class="back-link">&larr; Back to Stories</a>
+    </div>
+
+    <header class="post-header">
+      {% if topic %}
+      <span class="tag tag--topic">{{ topic }}</span>
+      {% endif %}
+      <h1 class="post-title">{{ title }}</h1>
+      <div class="post-meta story-meta">
+        <div class="story-author-row">
+          <div class="author-avatar" aria-hidden="true">{{ author[0] if author else "A" }}</div>
+          <div>
+            <p class="author-name">{{ author if author else "Anonymous" }}</p>
+            {% if details %}
+            <p class="author-details">{{ details }}</p>
+            {% endif %}
+          </div>
+        </div>
+        <time datetime="{{ date | isoDate }}">{{ date | formatDate }}</time>
+      </div>
+    </header>
+
+    <hr class="story-divider" />
+
+    <div class="story-body prose">
+      {{ content | safe }}
+    </div>
+
+    <div class="post-footer-prompt">
+      <h2>Did this resonate?</h2>
+      <p>Stories like this one exist because someone was willing to put words to something they had been carrying. If yours is waiting to be told, this is where it belongs.</p>
+      <a href="/stories/#submit" class="btn btn-primary">Share Your Story</a>
+    </div>
+
+  </div>
+</article>

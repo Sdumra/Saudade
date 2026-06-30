@@ -1,0 +1,271 @@
+---
+layout: base.njk
+title: Your Voices
+description: Community stories from graduate students — submitted, reviewed, and published with care. Every story here belonged to someone who needed to be heard.
+---
+
+<div class="story-page">
+  <div class="page-header">
+    <div class="container">
+      <div class="page-header-inner">
+        <h1 class="page-title">Your Voices</h1>
+        <p class="page-description">These stories were submitted by graduate students who wanted to put words to something they had been carrying. Each one was read, considered, and published by a real person. Nothing here is anonymous to the void — it is anonymous by choice, and shared with care.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    {# Search #}
+    <div class="search-row" style="margin-bottom: var(--space-6);">
+      <div class="search-input-wrap">
+        <svg class="search-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+        <input
+          type="search"
+          class="search-input"
+          id="stories-search"
+          placeholder="Search stories..."
+          aria-label="Search community stories"
+        />
+      </div>
+    </div>
+
+    {# Topic filter chips #}
+    <div class="filter-chips" id="topic-chips" role="group" aria-label="Filter by topic">
+      <button class="chip is-active" data-topic="all">All</button>
+      {% for topic in site.storyTopics %}
+      <button class="chip" data-topic="{{ topic }}">{{ topic }}</button>
+      {% endfor %}
+    </div>
+
+    {# Stories grid #}
+    {% if collections.approvedStories and collections.approvedStories.length > 0 %}
+    <div class="card-grid" id="stories-grid">
+      {% for story in collections.approvedStories %}
+      <a href="{{ story.url }}"
+         class="card story-card"
+         data-title="{{ story.data.title | lower }}"
+         data-excerpt="{{ story.data.excerpt | lower }}"
+         data-topic="{{ story.data.topic }}">
+        {% if story.data.topic %}
+        <span class="tag tag--topic">{{ story.data.topic }}</span>
+        {% endif %}
+        <h2 class="card-title">{{ story.data.title }}</h2>
+        {% if story.data.excerpt %}
+        <p class="card-excerpt">{{ story.data.excerpt }}</p>
+        {% endif %}
+        <div class="story-card-footer">
+          <div class="author-row">
+            <div class="author-avatar" aria-hidden="true">{{ story.data.author[0] if story.data.author else "A" }}</div>
+            <div>
+              <p class="author-name">{{ story.data.author if story.data.author else "Anonymous" }}</p>
+              {% if story.data.details %}
+              <p class="author-details">{{ story.data.details }}</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+
+    <div class="empty-state" id="stories-no-results" style="display: none;">
+      <div class="empty-state-icon" aria-hidden="true">◌</div>
+      <h3>No stories match</h3>
+      <p>Try a different search term or topic.</p>
+    </div>
+
+    {% else %}
+    <div class="empty-state" id="stories-empty">
+      <div class="empty-state-icon" aria-hidden="true">◈</div>
+      <h3>Stories appear here after review</h3>
+      <p>When a submission is received and approved, it appears in this space. The form below is live — the first story could come from someone who visits today.</p>
+    </div>
+    {% endif %}
+
+    {# ——— Submission Form ——— #}
+    <div class="story-submission" id="submit">
+      <div class="story-submission-header">
+        <h2 class="story-submission-title">Share your story</h2>
+        <p style="color: var(--color-ink-muted); font-size: var(--text-base); line-height: 1.7;">This goes directly to the founder's inbox. Nothing is published automatically. You decide what to share — your name, your program, your country. Anonymous is completely fine. What matters is that you say what you need to say.</p>
+      </div>
+
+      <div class="privacy-note">
+        <strong style="display: inline; font-size: inherit; text-transform: none; letter-spacing: normal; color: var(--color-moss); font-weight: 600;">Privacy:</strong> Submissions go directly to the founder by email. Nothing auto-publishes. If she wants to share your story, she will contact you first. You can submit anonymously — that is always an option.
+      </div>
+
+      <form id="story-form" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="story-name">Name <span class="optional">(optional)</span></label>
+            <input type="text" class="form-input" id="story-name" name="name" placeholder="Or leave blank to submit anonymously" autocomplete="off" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="story-program">Program <span class="optional">(optional)</span></label>
+            <input type="text" class="form-input" id="story-program" name="program" placeholder="e.g. PhD Molecular Biology" autocomplete="off" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="story-year">Year in program <span class="optional">(optional)</span></label>
+            <select class="form-select" id="story-year" name="year">
+              <option value="">— Select —</option>
+              <option>Year 1</option>
+              <option>Year 2</option>
+              <option>Year 3</option>
+              <option>Year 4</option>
+              <option>Year 5</option>
+              <option>Year 6+</option>
+              <option>Postdoc</option>
+              <option>Masters</option>
+              <option>Prefer not to say</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="story-country">Country <span class="optional">(optional)</span></label>
+            <input type="text" class="form-input" id="story-country" name="country" placeholder="e.g. United States, Brazil, India" autocomplete="off" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="story-topic">Topic <span style="color: #c0392b;">*</span></label>
+          <select class="form-select" id="story-topic" name="topic" required>
+            <option value="">— Select the closest topic —</option>
+            {% for topic in site.storyTopics %}
+            <option value="{{ topic }}">{{ topic }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="story-title">Title <span style="color: #c0392b;">*</span></label>
+          <p class="form-hint">What would you call what you are about to share? Does not need to be perfect.</p>
+          <input type="text" class="form-input" id="story-title" name="title" placeholder="Give your story a title" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="story-body">Your story <span style="color: #c0392b;">*</span></label>
+          <p class="form-hint">Write whatever feels true. There is no length requirement. Short is fine. Long is fine. Raw is fine.</p>
+          <textarea class="form-textarea" id="story-body" name="story" rows="10" placeholder="Your story goes here..." required style="min-height: 240px;"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-large" id="story-submit">Send my story</button>
+
+        <div class="form-success" id="story-success">
+          <strong>Received.</strong> Thank you for trusting this space with your words. The founder will read your submission personally. If she would like to share it, she will reach out first.
+        </div>
+
+        <div class="form-error" id="story-error">
+          Something went wrong with the form. You can also email directly at <a href="mailto:sdumra@clemson.edu">sdumra@clemson.edu</a> — that works just as well.
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function() {
+  // Filter logic
+  const searchInput = document.getElementById("stories-search");
+  const chips = document.querySelectorAll("#topic-chips .chip");
+  const cards = document.querySelectorAll("#stories-grid .story-card");
+  const noResults = document.getElementById("stories-no-results");
+  const grid = document.getElementById("stories-grid");
+
+  let activeTopic = "all";
+  let searchTerm = "";
+
+  function filterCards() {
+    if (!cards.length) return;
+    let visible = 0;
+    cards.forEach(function(card) {
+      const title = card.getAttribute("data-title") || "";
+      const excerpt = card.getAttribute("data-excerpt") || "";
+      const topic = card.getAttribute("data-topic") || "";
+      const matchesSearch = !searchTerm || title.includes(searchTerm) || excerpt.includes(searchTerm);
+      const matchesTopic = activeTopic === "all" || topic === activeTopic;
+      if (matchesSearch && matchesTopic) {
+        card.style.display = "";
+        visible++;
+      } else {
+        card.style.display = "none";
+      }
+    });
+    if (noResults) noResults.style.display = visible === 0 ? "block" : "none";
+    if (grid) grid.style.display = visible === 0 ? "none" : "";
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener("input", function() {
+      searchTerm = this.value.trim().toLowerCase();
+      filterCards();
+    });
+  }
+
+  chips.forEach(function(chip) {
+    chip.addEventListener("click", function() {
+      chips.forEach(function(c) { c.classList.remove("is-active"); });
+      chip.classList.add("is-active");
+      activeTopic = chip.getAttribute("data-topic");
+      filterCards();
+    });
+  });
+
+  // Submission form
+  const form = document.getElementById("story-form");
+  const submitBtn = document.getElementById("story-submit");
+  const successMsg = document.getElementById("story-success");
+  const errorMsg = document.getElementById("story-error");
+
+  if (form) {
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const topic = document.getElementById("story-topic").value;
+      const title = document.getElementById("story-title").value.trim();
+      const body = document.getElementById("story-body").value.trim();
+
+      if (!topic || !title || !body) {
+        if (window.showToast) showToast("Please fill in the required fields.", "error");
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Sending...";
+
+      const formData = new FormData();
+      formData.append("name", document.getElementById("story-name").value.trim() || "Anonymous");
+      formData.append("program", document.getElementById("story-program").value.trim());
+      formData.append("year", document.getElementById("story-year").value);
+      formData.append("country", document.getElementById("story-country").value.trim());
+      formData.append("topic", topic);
+      formData.append("title", title);
+      formData.append("story", body);
+
+      fetch("https://formspree.io/f/xrewgdej", {
+        method: "POST",
+        body: formData,
+        headers: { "Accept": "application/json" }
+      })
+      .then(function(res) {
+        if (res.ok) {
+          form.reset();
+          successMsg.classList.add("is-visible");
+          submitBtn.style.display = "none";
+        } else {
+          throw new Error("Form error");
+        }
+      })
+      .catch(function() {
+        errorMsg.classList.add("is-visible");
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Send my story";
+      });
+    });
+  }
+})();
+</script>

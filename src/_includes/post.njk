@@ -1,0 +1,49 @@
+---
+layout: base.njk
+---
+<article class="post-page">
+  <div class="container">
+
+    <div class="post-nav-row">
+      <a href="/journal/" class="back-link">&larr; Back to Journal</a>
+    </div>
+
+    <header class="post-header">
+      {% if category %}
+      <span class="tag tag--category">{{ category }}</span>
+      {% endif %}
+      <h1 class="post-title">{{ title }}</h1>
+      <div class="post-meta">
+        <time datetime="{{ date | isoDate }}">{{ date | formatDate }}</time>
+        <span class="meta-sep">&middot;</span>
+        <span>{{ content | readingTime }}</span>
+      </div>
+    </header>
+
+    <div class="post-layout">
+      <div class="post-body prose">
+        {{ content | safe }}
+      </div>
+
+      <aside class="post-sidebar">
+        {% if sidebar_note %}
+        <div class="sidebar-card sidebar-note">
+          <p class="sidebar-note-text">{{ sidebar_note }}</p>
+        </div>
+        {% endif %}
+
+        <div class="sidebar-card sidebar-cta">
+          <p class="sidebar-cta-prompt">Does any of this land with you?</p>
+          <p>This space exists because of people who feel seen here. If something in this post stirred something in you — your voice belongs here too.</p>
+          <a href="/stories/#submit" class="btn btn-outline btn-small">Share Your Story</a>
+        </div>
+      </aside>
+    </div>
+
+    <div class="post-footer-prompt">
+      <p>If this post said something you needed to hear, share what you are carrying. Every story here makes someone else feel less alone.</p>
+      <a href="/stories/#submit" class="btn btn-primary">Share Your Story</a>
+    </div>
+
+  </div>
+</article>

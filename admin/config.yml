@@ -1,0 +1,106 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: public/images
+public_folder: /images
+
+collections:
+  - name: "blog"
+    label: "Journal Posts"
+    folder: "content/blog"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options:
+          - "Monthly Reflection"
+          - "Research Life"
+          - "Burnout and Recovery"
+          - "Impostor Syndrome"
+          - "Identity and Belonging"
+          - "Letter to My Younger Self"
+          - "Graduate School Lessons"
+          - "Life Outside Academia"
+          - "Personal Growth"
+          - "Loneliness and Community"
+      - { label: "Excerpt", name: "excerpt", widget: "text", hint: "A short summary shown in listings — max 200 characters." }
+      - { label: "Body", name: "body", widget: "markdown" }
+      - { label: "Sidebar Note", name: "sidebar_note", widget: "text", required: false, hint: "A short handwritten-style annotation shown in the article sidebar. Think of it like a margin note in a thesis — optional but meaningful." }
+      - { label: "Draft", name: "draft", widget: "boolean", default: true, hint: "Toggle off when you are ready for this post to appear on the site." }
+
+  - name: "stories"
+    label: "Community Stories"
+    folder: "content/stories"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - label: "Topic"
+        name: "topic"
+        widget: "select"
+        options:
+          - "Burnout"
+          - "Impostor Syndrome"
+          - "Research Struggles"
+          - "Advisor Challenges"
+          - "International Student Experience"
+          - "Anxiety and Mental Health"
+          - "Loneliness"
+          - "Identity and Belonging"
+          - "Success and Growth"
+          - "Something Else"
+      - { label: "Author", name: "author", widget: "string", default: "Anonymous" }
+      - { label: "Details", name: "details", widget: "string", hint: "Program, year, country — only what they chose to share. Example: PhD Biology, Year 3, Brazil.", required: false }
+      - { label: "Excerpt", name: "excerpt", widget: "text", hint: "1–2 sentences shown on the story card in the listing page." }
+      - { label: "Body", name: "body", widget: "markdown" }
+      - { label: "Approved", name: "approved", widget: "boolean", default: false, hint: "Only toggle this on after you have read the submission and decided to publish it. Nothing appears on the site until this is true." }
+
+  - name: "about"
+    label: "About Page"
+    files:
+      - label: "About Page Content"
+        name: "about"
+        file: "content/about.md"
+        fields:
+          - { label: "Why I Built This", name: "why_built", widget: "markdown", hint: "This appears on the home page and the about page. Write it in your own voice." }
+          - { label: "A Little About Me", name: "about_me", widget: "markdown", hint: "Tell visitors who you are — your field, where you are in your program, whatever feels right to share." }
+          - { label: "What I Hope You Feel Here", name: "hope", widget: "text", hint: "One to three sentences. What do you want someone to feel after spending time on this site?" }
+
+  - name: "resources"
+    label: "Resources"
+    folder: "content/resources"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - label: "Type"
+        name: "type"
+        widget: "select"
+        options:
+          - "Book"
+          - "Podcast"
+          - "Article"
+          - "Tool"
+          - "App"
+          - "Community"
+          - "Crisis Line"
+          - "Video"
+          - "Website"
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options:
+          - "Mental Health"
+          - "Books"
+          - "Podcasts"
+          - "Academic Wellness"
+          - "Research Productivity"
+          - "Crisis Support"
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Link (optional)", name: "url", widget: "string", required: false }

@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% if title %}{{ title }} — {{ site.title }}{% else %}{{ site.title }} — {{ site.description }}{% endif %}</title>
+  <meta name="description" content="{% if excerpt %}{{ excerpt }}{% else %}{{ site.description }}{% endif %}" />
+
+  {# Open Graph #}
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="{% if title %}{{ title }} — {{ site.title }}{% else %}{{ site.title }}{% endif %}" />
+  <meta property="og:description" content="{% if excerpt %}{{ excerpt }}{% else %}{{ site.description }}{% endif %}" />
+  <meta property="og:url" content="{{ site.url }}{{ page.url }}" />
+  <meta property="og:site_name" content="{{ site.title }}" />
+
+  {# Fonts #}
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600;1,700&family=Inter:wght@400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/assets/css/styles.css" />
+
+  {# Netlify Identity #}
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  {# Navigation #}
+  <header class="site-header" id="site-header">
+    <nav class="nav-inner container">
+      <a href="/" class="nav-logo" aria-label="Saudade home">
+        <em>Saudade</em>
+      </a>
+
+      <ul class="nav-links" role="list">
+        {% for item in site.nav %}
+        <li>
+          <a href="{{ item.url }}"
+             class="nav-link{% if page.url == item.url or (item.url != '/' and page.url.startsWith(item.url)) %} active{% endif %}">
+            {{ item.label }}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+
+      <a href="/stories/#submit" class="btn btn-outline btn-small nav-cta">Share Your Story</a>
+
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-drawer">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+    </nav>
+
+    {# Mobile drawer #}
+    <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+      <div class="mobile-drawer-inner">
+        <ul class="mobile-nav-links" role="list">
+          {% for item in site.nav %}
+          <li>
+            <a href="{{ item.url }}"
+               class="mobile-nav-link{% if page.url == item.url %} active{% endif %}">
+              {{ item.label }}
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+        <a href="/stories/#submit" class="btn btn-primary mobile-cta">Share Your Story</a>
+      </div>
+    </div>
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+  </header>
+
+  <main id="main-content">
+    {{ content | safe }}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <p class="footer-wordmark"><em>Saudade</em></p>
+          <p class="footer-tagline">a community for graduate students</p>
+          <p class="footer-desc">Real stories, quiet solidarity, and the reminder that you are not walking this road alone.</p>
+        </div>
+
+        <div class="footer-col">
+          <p class="footer-col-title">Read</p>
+          <ul role="list">
+            <li><a href="/journal/">Journal</a></li>
+            <li><a href="/stories/">Stories</a></li>
+            <li><a href="/resources/">Resources</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <p class="footer-col-title">Connect</p>
+          <ul role="list">
+            <li><a href="/stories/#submit">Share Your Story</a></li>
+            <li><a href="/contact/">Get in Touch</a></li>
+            <li><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <p class="footer-col-title">About</p>
+          <ul role="list">
+            <li><a href="/about/">About Saudade</a></li>
+            <li><a href="/about/#values">What We Stand For</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; {{ site.title }} {{ site.year }}. All rights reserved.</p>
+        <p>Every word on this site was written by a real person. No AI-generated content, no invented stories.</p>
+      </div>
+    </div>
+  </footer>
+
+  {# Toast notification #}
+  <div class="toast" id="toast" role="alert" aria-live="polite" aria-atomic="true"></div>
+
+  <script>
+    // Netlify Identity redirect
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", function(user) {
+        if (!user) {
+          window.netlifyIdentity.on("login", function() {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
+
+    // Mobile nav
+    const hamburger = document.getElementById("hamburger");
+    const drawer = document.getElementById("mobile-drawer");
+    const overlay = document.getElementById("mobile-overlay");
+    const header = document.getElementById("site-header");
+
+    function openDrawer() {
+      drawer.classList.add("is-open");
+      overlay.classList.add("is-visible");
+      hamburger.classList.add("is-open");
+      hamburger.setAttribute("aria-expanded", "true");
+      drawer.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeDrawer() {
+      drawer.classList.remove("is-open");
+      overlay.classList.remove("is-visible");
+      hamburger.classList.remove("is-open");
+      hamburger.setAttribute("aria-expanded", "false");
+      drawer.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+
+    hamburger.addEventListener("click", function() {
+      if (drawer.classList.contains("is-open")) {
+        closeDrawer();
+      } else {
+        openDrawer();
+      }
+    });
+
+    overlay.addEventListener("click", closeDrawer);
+
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Escape" && drawer.classList.contains("is-open")) {
+        closeDrawer();
+      }
+    });
+
+    // Scroll shadow on nav
+    window.addEventListener("scroll", function() {
+      if (window.scrollY > 10) {
+        header.classList.add("scrolled");
+      } else {
+        header.classList.remove("scrolled");
+      }
+    }, { passive: true });
+
+    // Toast function
+    window.showToast = function(message, type) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.className = "toast is-visible" + (type ? " toast--" + type : "");
+      setTimeout(function() {
+        toast.classList.remove("is-visible");
+      }, 4000);
+    };
+  </script>
+
+</body>
+</html>
