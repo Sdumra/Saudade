@@ -1,3 +1,6 @@
+const fs = require("fs");
+const path = require("path");
+const matter = require("gray-matter");
 const markdownIt = require("markdown-it");
 const markdownItAnchor = require("markdown-it-anchor");
 
@@ -31,6 +34,15 @@ module.exports = function (eleventyConfig) {
       .getFilteredByGlob("content/stories/*.md")
       .filter((item) => item.data.approved === true)
       .sort((a, b) => b.date - a.date);
+  });
+
+  // content/about.md lives outside the "src" input directory (the CMS writes
+  // it to the repo root), so Eleventy never scans it as a template. Read it
+  // directly as global data instead.
+  eleventyConfig.addGlobalData("about", function () {
+    const filePath = path.join(__dirname, "content/about.md");
+    if (!fs.existsSync(filePath)) return {};
+    return matter(fs.readFileSync(filePath, "utf8")).data;
   });
 
   eleventyConfig.addCollection("allResources", function (collectionApi) {

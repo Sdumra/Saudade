@@ -24,10 +24,9 @@ description: Saudade is a community platform for graduate students — real stor
   <div class="container">
     <div class="home-why-inner">
       <p class="section-label">Why I Created Saudade</p>
-      {% set aboutData = collections.all | selectattr("fileSlug", "eq", "about") | first %}
       <div class="home-why-content">
-        {% if aboutData and aboutData.data.why_built %}
-          {{ aboutData.data.why_built | safe }}
+        {% if about and about.why_built %}
+          {{ about.why_built | safe }}
         {% else %}
           <div class="placeholder-content">
             <strong>Founder — fill this in via the CMS</strong>

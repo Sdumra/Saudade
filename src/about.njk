@@ -15,7 +15,6 @@ description: Why Saudade exists, who built it, and what it stands for.
   </div>
 
   <div class="container">
-    {% set aboutData = collections.all | selectattr("fileSlug", "eq", "about") | first %}
 
     <div class="about-layout">
       {# Left column — content #}
@@ -24,8 +23,8 @@ description: Why Saudade exists, who built it, and what it stands for.
         <div class="about-section">
           <p class="about-section-label">Why I Built This</p>
           <div class="about-section-content">
-            {% if aboutData and aboutData.data.why_built %}
-              {{ aboutData.data.why_built | safe }}
+            {% if about and about.why_built %}
+              {{ about.why_built | safe }}
             {% else %}
               <div class="placeholder-content">
                 <strong>Founder — fill this in via the CMS</strong>
@@ -38,8 +37,8 @@ description: Why Saudade exists, who built it, and what it stands for.
         <div class="about-section" style="margin-top: var(--space-10);">
           <p class="about-section-label">A Little About Me</p>
           <div class="about-section-content">
-            {% if aboutData and aboutData.data.about_me %}
-              {{ aboutData.data.about_me | safe }}
+            {% if about and about.about_me %}
+              {{ about.about_me | safe }}
             {% else %}
               <div class="placeholder-content">
                 <strong>Founder — fill this in via the CMS</strong>
@@ -52,8 +51,8 @@ description: Why Saudade exists, who built it, and what it stands for.
         <div class="about-section" style="margin-top: var(--space-10);">
           <p class="about-section-label">What I Hope You Feel Here</p>
           <div class="about-section-content">
-            {% if aboutData and aboutData.data.hope %}
-              <p>{{ aboutData.data.hope }}</p>
+            {% if about and about.hope %}
+              <p>{{ about.hope }}</p>
             {% else %}
               <div class="placeholder-content">
                 <strong>Founder — fill this in via the CMS</strong>
