@@ -14,7 +14,7 @@ Before you start, make sure you have:
 - **Git** — download from [git-scm.com](https://git-scm.com)
 - **A GitHub account** — [github.com](https://github.com)
 - **A Netlify account** — [netlify.com](https://netlify.com) (free tier is fine)
-- **A Formspree account** — [formspree.io](https://formspree.io) (free tier handles the contact and story forms; ID already set to `xrewgdej`)
+- **A Formspree account** — [formspree.io](https://formspree.io) (free tier handles the contact and story forms; ID already set to `xlgypekv`)
 
 ---
 
@@ -186,11 +186,11 @@ The placeholders on the home page and about page will be replaced automatically 
 
 ## Formspree Setup
 
-The contact form and story submission form send to Formspree ID `xrewgdej`. This is already configured in the code.
+The contact form and story submission form send to Formspree ID `xlgypekv`. This is already configured in the code.
 
 To verify it is working:
 1. Log in to [formspree.io](https://formspree.io)
-2. Find the form with ID `xrewgdej`
+2. Find the form with ID `xlgypekv`
 3. Make sure your email address is set as the notification recipient
 4. Submit a test message from the live site to confirm delivery
 

@@ -4,8 +4,8 @@ module.exports = {
   description: "A community platform for graduate students. Honest stories, quiet solidarity, and the feeling you are not alone.",
   url: "https://saudade.netlify.app",
   author: "Saudade",
-  email: "sdumra@clemson.edu",
-  formspreeId: "xrewgdej",
+  email: "hellosaudade20@gmail.com",
+  formspreeId: "xlgypekv",
   nav: [
     { label: "Home", url: "/" },
     { label: "Journal", url: "/journal/" },
