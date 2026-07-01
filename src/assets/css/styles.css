@@ -235,7 +235,7 @@ input, textarea, select {
 }
 
 .nav-link.active {
-  color: var(--color-moss);
+  color: #7DA876;
   font-weight: 600;
 }
 
@@ -292,7 +292,7 @@ input, textarea, select {
   right: 0;
   width: 280px;
   height: 100%;
-  background: var(--color-surface);
+  background: #F7F3EE;
   z-index: 200;
   padding: var(--space-16) var(--space-8) var(--space-8);
   transform: translateX(100%);
@@ -342,7 +342,7 @@ input, textarea, select {
 }
 
 .mobile-nav-link.active {
-  color: var(--color-moss);
+  color: #7DA876;
   background-color: var(--color-surface-alt);
 }
 

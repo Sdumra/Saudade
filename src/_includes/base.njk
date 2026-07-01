@@ -53,25 +53,28 @@
         <span class="hamburger-line"></span>
       </button>
     </nav>
-
-    {# Mobile drawer #}
-    <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
-      <div class="mobile-drawer-inner">
-        <ul class="mobile-nav-links" role="list">
-          {% for item in site.nav %}
-          <li>
-            <a href="{{ item.url }}"
-               class="mobile-nav-link{% if page.url == item.url %} active{% endif %}">
-              {{ item.label }}
-            </a>
-          </li>
-          {% endfor %}
-        </ul>
-        <a href="/stories/#submit" class="btn btn-primary mobile-cta">Share Your Story</a>
-      </div>
-    </div>
-    <div class="mobile-overlay" id="mobile-overlay"></div>
   </header>
+
+  {# Mobile drawer — kept outside the header so its "position: fixed" isn't
+     re-anchored to the header's containing block (backdrop-filter on an
+     ancestor makes fixed-position descendants size/position relative to
+     it instead of the viewport, which was clipping the drawer). #}
+  <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+    <div class="mobile-drawer-inner">
+      <ul class="mobile-nav-links" role="list">
+        {% for item in site.nav %}
+        <li>
+          <a href="{{ item.url }}"
+             class="mobile-nav-link{% if page.url == item.url %} active{% endif %}">
+            {{ item.label }}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+      <a href="/stories/#submit" class="btn btn-primary mobile-cta">Share Your Story</a>
+    </div>
+  </div>
+  <div class="mobile-overlay" id="mobile-overlay"></div>
 
   <main id="main-content">
     {{ content | safe }}
