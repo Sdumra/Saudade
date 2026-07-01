@@ -2,7 +2,7 @@ module.exports = {
   title: "Saudade",
   year: new Date().getFullYear(),
   description: "A community platform for graduate students. Honest stories, quiet solidarity, and the feeling you are not alone.",
-  url: "https://saudade.netlify.app",
+  url: "https://hellosaudade.netlify.app",
   author: "Saudade",
   email: "hellosaudade20@gmail.com",
   formspreeId: "xlgypekv",

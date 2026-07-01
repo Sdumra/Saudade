@@ -83,7 +83,7 @@ Netlify will build and deploy the site. Every time you push to `main`, Netlify r
 
 ## Enabling the CMS
 
-The CMS lives at `yoursite.netlify.app/admin`. It needs two Netlify features enabled before it works.
+The CMS lives at `hellosaudade.netlify.app/admin`. It needs two Netlify features enabled before it works.
 
 ### Step 1 — Enable Netlify Identity
 
@@ -108,7 +108,7 @@ The CMS lives at `yoursite.netlify.app/admin`. It needs two Netlify features ena
 
 ### Step 4 — Access the CMS
 
-Go to `yoursite.netlify.app/admin`. Log in with your email and password. You should see the Decap CMS dashboard with four collections: Journal Posts, Community Stories, About Page, and Resources.
+Go to `hellosaudade.netlify.app/admin`. Log in with your email and password. You should see the Decap CMS dashboard with four collections: Journal Posts, Community Stories, About Page, and Resources.
 
 ---
 
