@@ -26,7 +26,7 @@ exports.handler = async (event) => {
         Authorization: `Token ${apiKey}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email }),
+      body: JSON.stringify({ email_address: email }),
     });
 
     if (response.ok) {
@@ -34,9 +34,12 @@ exports.handler = async (event) => {
     }
 
     const data = await response.json().catch(() => ({}));
+    const message = Array.isArray(data.detail)
+      ? data.detail.map((d) => (typeof d === "string" ? d : d.detail)).join(" ")
+      : data.detail;
     return {
       statusCode: response.status,
-      body: JSON.stringify({ error: data.detail || "Something went wrong. Please try again." }),
+      body: JSON.stringify({ error: message || "Something went wrong. Please try again." }),
     };
   } catch (err) {
     return { statusCode: 502, body: JSON.stringify({ error: "Could not reach the newsletter service." }) };
