@@ -56,7 +56,7 @@ description: Carefully selected books, tools, communities, and crisis support fo
     </div>
 
     {# Group resources by category #}
-    {% set allResources = collections.allResources %}
+    {% set allResources = resources %}
 
     {% for cat in site.resourceCategories %}
       {% if cat.label != "Crisis Support" %}

@@ -45,9 +45,17 @@ module.exports = function (eleventyConfig) {
     return matter(fs.readFileSync(filePath, "utf8")).data;
   });
 
-  eleventyConfig.addCollection("allResources", function (collectionApi) {
-    return collectionApi
-      .getFilteredByGlob("content/resources/*.md")
+  // content/resources/*.md lives outside the "src" input directory (the CMS
+  // writes it to the repo root), so Eleventy never scans it as a template
+  // and getFilteredByGlob can't find it. Read the files directly as global
+  // data instead, same as content/about.md above.
+  eleventyConfig.addGlobalData("resources", function () {
+    const dirPath = path.join(__dirname, "content/resources");
+    if (!fs.existsSync(dirPath)) return [];
+    return fs
+      .readdirSync(dirPath)
+      .filter((file) => file.endsWith(".md"))
+      .map((file) => matter(fs.readFileSync(path.join(dirPath, file), "utf8")))
       .sort((a, b) => {
         if (a.data.title < b.data.title) return -1;
         if (a.data.title > b.data.title) return 1;
