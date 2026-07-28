@@ -80,15 +80,7 @@ description: Carefully selected books, tools, communities, and crisis support fo
                     <h3 class="resource-title">{{ resource.data.title }}</h3>
                     <span class="tag tag--type">{{ resource.data.type }}</span>
                   </div>
-                  <p class="resource-desc">
-                    {% set desc = resource.data.description %}
-                    {% set splitIndex = desc.indexOf(".") %}
-                    {% if splitIndex > -1 %}
-                      <span class="resource-desc-lead">{{ desc.slice(0, splitIndex + 1) }}</span>{{ desc.slice(splitIndex + 1) }}
-                    {% else %}
-                      {{ desc }}
-                    {% endif %}
-                  </p>
+                  <p class="resource-desc">{{ resource.data.description }}</p>
                   {% if resource.data.url %}
                   <a href="{{ resource.data.url }}" class="btn btn-outline btn-small" target="_blank" rel="noopener noreferrer" style="margin-top: var(--space-4);">Visit &rarr;</a>
                   {% endif %}
@@ -123,6 +115,36 @@ description: Carefully selected books, tools, communities, and crisis support fo
 </div>
 
 <script>
+(function() {
+  function escapeHtml(str) {
+    const div = document.createElement("div");
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function splitIntoSentences(text) {
+    return text
+      .split(/(?<=[.!?])\s+/)
+      .map(function (s) { return s.trim(); })
+      .filter(function (s) { return s.length > 0; });
+  }
+
+  document.querySelectorAll(".resource-desc").forEach(function (el) {
+    const sentences = splitIntoSentences(el.textContent);
+    if (sentences.length === 0) return;
+
+    if (sentences.length === 1) {
+      el.innerHTML = "<em><strong>" + escapeHtml(sentences[0]) + "</strong></em>";
+      return;
+    }
+
+    const first = "<em>" + escapeHtml(sentences[0]) + "</em>";
+    const last = "<strong>" + escapeHtml(sentences[sentences.length - 1]) + "</strong>";
+    const middle = sentences.slice(1, -1).map(escapeHtml);
+    el.innerHTML = [first].concat(middle, [last]).join(" ");
+  });
+})();
+
 (function() {
   const searchInput = document.getElementById("resources-search");
   const groups = document.querySelectorAll(".resource-group");

@@ -1611,11 +1611,6 @@ h6 { font-size: var(--text-base); font-family: var(--font-sans); font-weight: 60
   line-height: 1.6;
 }
 
-.resource-desc-lead {
-  font-weight: 600;
-  color: var(--color-text);
-}
-
 /* ---------------------------------------------------------
    ABOUT PAGE
    --------------------------------------------------------- */
