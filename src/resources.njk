@@ -80,7 +80,15 @@ description: Carefully selected books, tools, communities, and crisis support fo
                     <h3 class="resource-title">{{ resource.data.title }}</h3>
                     <span class="tag tag--type">{{ resource.data.type }}</span>
                   </div>
-                  <p class="resource-desc">{{ resource.data.description }}</p>
+                  <p class="resource-desc">
+                    {% set desc = resource.data.description %}
+                    {% set splitIndex = desc.indexOf(".") %}
+                    {% if splitIndex > -1 %}
+                      <span class="resource-desc-lead">{{ desc.slice(0, splitIndex + 1) }}</span>{{ desc.slice(splitIndex + 1) }}
+                    {% else %}
+                      {{ desc }}
+                    {% endif %}
+                  </p>
                   {% if resource.data.url %}
                   <a href="{{ resource.data.url }}" class="btn btn-outline btn-small" target="_blank" rel="noopener noreferrer" style="margin-top: var(--space-4);">Visit &rarr;</a>
                   {% endif %}
