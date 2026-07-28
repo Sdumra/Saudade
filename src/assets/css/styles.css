@@ -1266,6 +1266,28 @@ h6 { font-size: var(--text-base); font-family: var(--font-sans); font-weight: 60
   display: block;
 }
 
+.newsletter-error {
+  display: none;
+  font-size: var(--text-sm);
+  opacity: 0.85;
+  margin-top: var(--space-4);
+  color: #e8a87c;
+}
+
+.newsletter-error.is-visible {
+  display: block;
+}
+
+.newsletter-error a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+#newsletter-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 /* ---------------------------------------------------------
    JOURNAL PAGE
    --------------------------------------------------------- */
